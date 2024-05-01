@@ -1,0 +1,23 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./serverVol/files:/app/files
+
+  client:
+    depends_on: [server]
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
+    command: demonstration files
+    # command: upload files
+    # command: get cb8425a8-fad7-4d8b-95b6-87de7d842b3b 4
+    env_file:
+      - local.env
+    volumes:
+      - ./clientVol/merkle_roots:/app/merkle_roots
+      - ./clientVol/downloads:/app/downloads
